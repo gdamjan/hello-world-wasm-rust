@@ -18,6 +18,8 @@ This is just a bare-bones example of how to compile and use rust webassembly in 
 interoperability with this approach. For any serious projects, you should use
 [wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen).
 
+I don't plan to add anything to this example.
+
 # Deps
 
 `node` and `rustup` are required. not much else. tested on linux.
