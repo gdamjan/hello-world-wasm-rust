@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const bytes = fs.readFileSync('./target/wasm32-unknown-unknown/release/hello_world_wasm_rust.wasm');
 
