@@ -10,4 +10,4 @@ const { add } = wasmModule.instance.exports;
 
 const sum = add(5, 6);
 
-console.log(sum); // Outputs 11
+console.log("5 + 6:", sum); // Outputs 11
