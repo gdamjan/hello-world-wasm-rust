@@ -1,0 +1,50 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - name: Build
+      run: cargo build --target wasm32-wasip1 --release
+
+    - name: Prepare artifact
+      run: |
+        install -D index.html dist/index.html
+        install -D target/wasm32-wasip1/release/hello_world_wasm_rust.wasm dist/target/wasm32-wasip1/release/hello_world_wasm_rust.wasm
+
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./dist
+
+  deploy:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    needs: ci
+
+    # Allow one concurrent deployment
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - uses: actions/deploy-pages@v4
+      id: deployment
