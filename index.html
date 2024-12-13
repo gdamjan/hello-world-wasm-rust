@@ -1,0 +1,14 @@
+<html>
+<script type=module>
+  let req = fetch("target/wasm32-wasip1/release/hello_world_wasm_rust.wasm");
+  let wasmModule = await WebAssembly.instantiateStreaming(req);
+
+  let { add } = wasmModule.instance.exports;
+
+  let sum = add(5, 6);
+  document.querySelector("#result").innerText = `5 + 6 = ${sum}`;
+</script>
+<body>
+Result from WASM: <span id="result"></span>
+</body>
+</html>
