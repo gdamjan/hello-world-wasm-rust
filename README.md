@@ -1,18 +1,29 @@
 # Quick Start
 
+### Build
 ```
-rustup target add wasm32-unknown-unknown
-cargo build --target wasm32-unknown-unknown --release
-node index.js
+rustup target add wasm32-wasip1
+cargo build --target wasm32-wasip1 --release
+```
+
+### Invoke from node, python, wasmer or wasmtime
+```
+node index.mjs
+
+uv run main.py
+
+wasmer run --invoke add  target/wasm32-wasip1/release/hello_world_wasm_rust.wasm 1 2
+
+wasmtime --invoke add target/wasm32-wasip1/release/hello_world_wasm_rust.wasm 1 2
 ```
 
 Optionally to make the .wasm file smaller:
 ```
 cargo install wasm-gc
-~/.cargo/bin/wasm-gc target/wasm32-unknown-unknown/release/*.wasm
+~/.cargo/bin/wasm-gc target/wasm32-wasip1/release/*.wasm
 ```
 
-# Explanation
+## Explanation
 
 This is just a bare-bones example of how to compile and use rust webassembly in nodejs. There not much js/rust
 interoperability with this approach. For any serious projects, you should use
